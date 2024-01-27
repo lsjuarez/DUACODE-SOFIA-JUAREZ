@@ -1,6 +1,6 @@
 import { Module } from "@nestjs/common";
 import { DuacodersRepoModule } from "../providers/duacoders-repo/duacoder-provider.module";
-import { JwtAuthServiceImpl, UsersServiceImpl } from "./service/index";
+import { DuacodersServiceImpl, JwtAuthServiceImpl, UsersServiceImpl } from "./service/index";
 import { JwtModule } from "@nestjs/jwt";
 
 @Module({
@@ -19,7 +19,11 @@ import { JwtModule } from "@nestjs/jwt";
         {
             provide: 'AuthInterface',
             useClass: JwtAuthServiceImpl
-        }
+        },
+        {
+            provide: 'DuacoderInterface',
+            useClass: DuacodersServiceImpl
+        },
     ],
     exports: [
         {
@@ -29,6 +33,10 @@ import { JwtModule } from "@nestjs/jwt";
         {
             provide: 'AuthInterface',
             useClass: JwtAuthServiceImpl
+        },
+        {
+            provide: 'DuacoderInterface',
+            useClass: DuacodersServiceImpl
         }
     ]
 })

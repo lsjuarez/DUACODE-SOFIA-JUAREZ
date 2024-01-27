@@ -1,7 +1,7 @@
 import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity({ name: 'skills'})
-export class Skill extends BaseEntity{
+@Entity({ name: 'departamentos'})
+export class Departamento extends BaseEntity{
     @PrimaryGeneratedColumn()
     id: number;
 
@@ -12,5 +12,7 @@ export class Skill extends BaseEntity{
     })
     nombre: string;
 
-    super(){};
+    constructor() {
+        super();
+    }
 }

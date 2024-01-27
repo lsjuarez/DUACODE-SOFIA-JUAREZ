@@ -12,28 +12,20 @@ export class UsersServiceImpl implements UsersInterface {
         private userRepository: UserRepositoryInterface,
         @Inject('AuthInterface')
         private authService: AuthInterface
-    ){}
-    
+    ) { }
+
     async login(user: UserRequestDto): Promise<string> {
-        try{
-            const existsUser = await this.userRepository.existsUser(user);
-           if(existsUser){
-            const token = await this.authService.signPayload({ sub: user.email});
+        const existsUser = await this.userRepository.existsUser(user);
+        if (existsUser) {
+            const token = await this.authService.signPayload({ sub: user.email });
             return token;
-           } else {
+        } else {
             throw new BadRequestException('El email o la contraseña es incorrecta.')
-           }
-        } catch(err){
-            throw new BadRequestException(err);
         }
     }
 
     async createUser(user: UserRequestDto): Promise<Users> {
-        try {
-            return await this.userRepository.createUser(user);
-        } catch(err){
-            throw new BadRequestException(err);
-        }
+        return await this.userRepository.createUser(user);
     }
-    
+
 }

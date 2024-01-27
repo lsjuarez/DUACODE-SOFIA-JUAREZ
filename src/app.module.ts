@@ -5,6 +5,8 @@ import { DuacoderPresentationModule } from './controllers/duacoders-presentation
 import { typeOrmDuacoderConfig } from './providers/duacoders-repo/config/typeorm-config';
 import { DuacodersRepoModule } from './providers/duacoders-repo/duacoder-provider.module';
 import { DuacoderCoreModule } from './core-services/duacoders-core.module';
+import { JwtModule } from '@nestjs/jwt';
+import { PassportModule } from '@nestjs/passport';
 
 @Module({
   imports: [
@@ -12,10 +14,11 @@ import { DuacoderCoreModule } from './core-services/duacoders-core.module';
     DuacodersRepoModule,
     TypeOrmModule.forRoot(typeOrmDuacoderConfig),
     DuacoderPresentationModule,
-    // JwtModule.register({
-    //   secret: 'super-secret-user',
-    //   signOptions: { expiresIn: '1h'}
-    // })
+    PassportModule,
+    JwtModule.register({
+      secret: 'super-secret-user',
+      signOptions: { expiresIn: '1h'}
+    })
   ],
   providers: [],
   controllers: [AppController],
