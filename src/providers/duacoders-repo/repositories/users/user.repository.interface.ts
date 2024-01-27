@@ -1,5 +1,7 @@
-import { CreateUserRequestDto } from "../../../../core-services/dtos/request/createUserRequest.dto";
+import { UserRequestDto } from "../../../../core-services/dtos/request/createUserRequest.dto";
+import { Users } from "../../entities/users.entity";
 
 export interface UserRepositoryInterface {
-    findUser(user: CreateUserRequestDto): Promise<string>;
+    existsUser(user: UserRequestDto): Promise<boolean>;
+    createUser(user: UserRequestDto): Promise<Users>;
 }

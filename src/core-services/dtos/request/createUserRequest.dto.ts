@@ -3,7 +3,7 @@ import { IsEmail, IsNotEmpty, Matches, MaxLength, MinLength } from "class-valida
 
 const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/
 
-export class CreateUserRequestDto {
+export class UserRequestDto {
     @ApiProperty({
         name: 'email',
         example: 'pedropaez@gmail.com',

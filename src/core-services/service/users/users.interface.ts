@@ -1,6 +1,7 @@
-import { CreateUserRequestDto } from "../../dtos/request/createUserRequest.dto";
+import { Users } from "src/providers/duacoders-repo/entities/users.entity";
+import { UserRequestDto } from "../../dtos/request/createUserRequest.dto";
 
 export interface UsersInterface {
-    login(user: CreateUserRequestDto): Promise<string>
-    createUser(user: CreateUserRequestDto): Promise<string>;
+    login(user: UserRequestDto): Promise<string>
+    createUser(user: UserRequestDto): Promise<Users>;
 }
