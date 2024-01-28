@@ -35,4 +35,15 @@ export class DuacoderInfoRepository implements DuacoderRepositoryInterface {
         async createDuacoder(duacoder: Duacoder): Promise<Duacoder> {
             return await this.duacoderRepository.save(duacoder);
         }
+
+        async deleteDuacoder(nif: string): Promise<boolean> {
+            const response = await this.duacoderRepository
+                .createQueryBuilder()
+                .delete()
+                .where('nif = :nif', { nif })
+                .execute()
+
+            if(response.affected === 0) return false;
+            return true;
+        }
     }

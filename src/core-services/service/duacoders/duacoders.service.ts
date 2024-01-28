@@ -1,6 +1,6 @@
 import { DuacoderInfoDto } from "src/core-services/dtos/response/duacoderInfoResponse.dto";
 import { DuacoderInterface } from "./duacoders.interface";
-import { Inject } from "@nestjs/common";
+import { BadRequestException, Inject } from "@nestjs/common";
 import { DepartamentoRepositoryInterface } from "src/providers/duacoders-repo/repositories/departamentos/departamento.repository.interface";
 import { PuestoRepositoryInterface } from "src/providers/duacoders-repo/repositories/puesto/puesto.repository.interface";
 import { SkillsDuacodersRepositoryInterface } from "src/providers/duacoders-repo/repositories/skillsXduacoders/skillsXduacoders.interface";
@@ -10,6 +10,7 @@ import { PuestoDtoResponse } from "src/core-services/dtos/response/puestoRespons
 import { SkillResponseDto } from "src/core-services/dtos/response/skillResponse.dto";
 import { SkillsRepositoryInterface } from "src/providers/duacoders-repo/repositories/skills/skills.interface";
 import { Duacoder } from "src/providers/duacoders-repo/entities/duacoders.entity";
+import { DeleteDuacoderRequestDto } from "src/core-services/dtos/request/deleteDuacoderRequest.dto";
 
 export class DuacodersServiceImpl implements DuacoderInterface {
     constructor(
@@ -47,13 +48,13 @@ export class DuacodersServiceImpl implements DuacoderInterface {
     }
     
     async getPuestos(): Promise<PuestoDtoResponse[]> {
-       return await this.puestoRepository.getPuestos();
+        return await this.puestoRepository.getPuestos();
     }
-
+    
     async getSkills(): Promise<SkillResponseDto[]> {
         return await this.skillsRepository.getAllSkills();
     }
-
+    
     async createDuacoder(duacoder: CreateDuacoderDto): Promise<DuacoderInfoDto> {
         const newDuacoder = {
             nif: duacoder.nif,
@@ -62,12 +63,24 @@ export class DuacodersServiceImpl implements DuacoderInterface {
             biografia: duacoder.biografia ? duacoder.biografia : null,
             foto: null,
             tortillaConCebolla: duacoder.tortillaConCebolla,
-            fechaNacimiento: duacoder.fechaNacimiento,
+            fechaNacimiento: duacoder.fechaNacimiento ? duacoder.fechaNacimiento : null,
         } as unknown as Duacoder;
-
+        
         await this.duacoderRepository.createDuacoder(newDuacoder);
         await this.skillsXduacoderRepository.createSkillsxDuacoder(duacoder.nif, duacoder.skills_id);
         
         return this.getDuacoderInfo(duacoder.nif);
     };
+
+    async deleteDuacoder(duacoder: DeleteDuacoderRequestDto): Promise<boolean> {
+        const { nif } = duacoder;
+        const deleteSkills = await this.skillsXduacoderRepository.deleteSkillsXduacoder(nif);
+        if(deleteSkills) {
+
+            const deleteDuacoder = await this.duacoderRepository.deleteDuacoder(nif);
+            if(deleteDuacoder) return true;
+            throw new BadRequestException('No se encontró duacoder para borrar.')
+        }
+        throw new BadRequestException('No se encontró duacoder para borrar.')
+    }
 }

@@ -1,6 +1,5 @@
 import { BadRequestException, Inject, Injectable } from "@nestjs/common";
 import { SkillsDuacodersRepositoryInterface } from "./skillsXduacoders.interface";
-import { Skill } from "../../entities/skills.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import { SkillsXDuacoder } from "../../entities/skillsXduacoder.entity";
 import { Repository } from "typeorm";
@@ -37,5 +36,16 @@ export class SkillXduacoderRepository implements SkillsDuacodersRepositoryInterf
         .insert()
         .values(skills_id.map((skillId) => ({ duacoderId: nif, skillsId: skillId})))
         .execute();
+    }
+
+    async deleteSkillsXduacoder(nif: string): Promise<boolean>{
+        const response = await this.skillsXduacoderRepository
+            .createQueryBuilder()
+            .delete()
+            .where('duacoder_id = :nif', { nif })
+            .execute();
+        
+        if(response.affected === 0) return false;
+        return true;
     }
 }

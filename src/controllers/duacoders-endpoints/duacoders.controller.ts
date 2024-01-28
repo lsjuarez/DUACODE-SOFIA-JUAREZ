@@ -1,6 +1,7 @@
-import { Controller, Post, UseGuards, Req, Get, Query, BadRequestException, Inject, Body } from "@nestjs/common";
+import { Controller, Post, UseGuards, Req, Get, Query, BadRequestException, Inject, Body, Delete } from "@nestjs/common";
 import { ApiQuery, ApiTags } from "@nestjs/swagger";
 import { CreateDuacoderDto } from "src/core-services/dtos/request/createDuacoderRequest.dto";
+import { DeleteDuacoderRequestDto } from "src/core-services/dtos/request/deleteDuacoderRequest.dto";
 import { DuacoderInfoDto } from "src/core-services/dtos/response/duacoderInfoResponse.dto";
 import { PuestoDtoResponse } from "src/core-services/dtos/response/puestoResponse.dto";
 import { SkillResponseDto } from "src/core-services/dtos/response/skillResponse.dto";
@@ -57,6 +58,15 @@ export class DuacodersEndpointsController {
             return await this.duacoderService.createDuacoder(duacoder);
         } catch(err){
             throw new BadRequestException(err)
+        }
+    }
+
+    @Delete('deleteDuacoder')
+    async deleteDuacoder(@Body() duacoder: DeleteDuacoderRequestDto): Promise<Boolean> {
+        try {
+            return await this.duacoderService.deleteDuacoder(duacoder);
+        } catch(err) {
+            throw new BadRequestException(err);
         }
     }
 }

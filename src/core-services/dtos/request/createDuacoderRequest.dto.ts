@@ -66,7 +66,6 @@ export class CreateDuacoderDto {
         type: [Number]
     })
     @IsNotEmpty({ message: 'El puesto no puede estar vacío.'})
-    //@IsNumber({}, {message: 'El puesto no posee el formato correcto.'})
     skills_id!: number[];
 
     @ApiProperty({
@@ -76,6 +75,6 @@ export class CreateDuacoderDto {
         description: 'Fecha de nacimiento del duacoder',
         type: String
     })
-    @IsNotEmpty({ message: 'La fecha de nacimiento no puede estar vacía.'})
-    fechaNacimiento!: string;
+    @IsOptional()
+    fechaNacimiento: string;
 }
