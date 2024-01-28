@@ -2,7 +2,7 @@ import { BaseEntity, Column, Entity, JoinColumn, ManyToMany, OneToMany, OneToOne
 import { Duacoder } from "./duacoders.entity";
 import { Skill } from "./skills.entity";
 
-@Entity({ name: 'skillsXduacoder' })
+@Entity({ name: 'skillsxduacoder' })
 export class SkillsXDuacoder extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;

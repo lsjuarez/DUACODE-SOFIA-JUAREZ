@@ -8,6 +8,10 @@ import { Puesto } from "./entities/puesto.entity";
 import { Duacoder } from "./entities/duacoders.entity";
 import { SkillsXDuacoder } from "./entities/skillsXduacoder.entity";
 import { DepartamentoRepository } from "./repositories/departamentos/departamento.repository.impl";
+import { PuestoRepository } from "./repositories/puesto/puesto.repository.impl";
+import { SkillsRepository } from "./repositories/skills/skills.repository.impl";
+import { SkillXduacoderRepository } from "./repositories/skillsXduacoders/skillsXduacoders.repository.impl";
+import { DuacoderInfoRepository } from "./repositories/duadocer/duacoder.repository.impl";
 
 @Module({
     imports: [
@@ -28,6 +32,22 @@ import { DepartamentoRepository } from "./repositories/departamentos/departament
         {
             provide: 'DepartamentoRepositoryInterface',
             useClass: DepartamentoRepository
+        },
+        {
+            provide: 'PuestoRepositoryInterface',
+            useClass: PuestoRepository
+        },
+        {
+            provide: 'SkillsRepositoryInterface',
+            useClass: SkillsRepository
+        },
+        {
+            provide: 'SkillsDuacodersRepositoryInterface',
+            useClass: SkillXduacoderRepository
+        },
+        {
+            provide: 'DuacoderRepositoryInterface',
+            useClass: DuacoderInfoRepository
         }
     ],
     exports: [
@@ -38,6 +58,22 @@ import { DepartamentoRepository } from "./repositories/departamentos/departament
         {
             provide: 'DepartamentoRepositoryInterface',
             useClass: DepartamentoRepository
+        },
+        {
+            provide: 'PuestoRepositoryInterface',
+            useClass: PuestoRepository
+        },
+        {
+            provide: 'SkillsRepositoryInterface',
+            useClass: SkillsRepository
+        },
+        {
+            provide: 'SkillsDuacodersRepositoryInterface',
+            useClass: SkillXduacoderRepository
+        },
+        {
+            provide: 'DuacoderRepositoryInterface',
+            useClass: DuacoderInfoRepository
         }
     ]
 })

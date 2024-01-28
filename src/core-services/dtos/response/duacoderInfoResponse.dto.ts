@@ -1,5 +1,6 @@
 export class DuacoderInfoDto {
-    nif!: number;
+    nif!: string;
+    nombre!: string;
     nombre_puesto!: string;
     nombre_departamento!: string;
     biografia?: string;

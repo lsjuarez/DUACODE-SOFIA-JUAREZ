@@ -15,7 +15,7 @@ export class DepartamentoRepository implements DepartamentoRepositoryInterface {
         const response =  await this.departamentoRepository
         .createQueryBuilder()
         .select(['nombre'])
-        .where('departamento.id = :id', { id })
+        .where('id = :id', { id })
         .execute();
 
         if(!response.length) throw new BadRequestException('El ID no corresponde con ningun departamento.')
