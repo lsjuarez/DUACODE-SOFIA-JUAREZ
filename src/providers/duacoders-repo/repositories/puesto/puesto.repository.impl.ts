@@ -3,6 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Puesto } from "../../entities/puesto.entity";
 import { Repository } from "typeorm";
 import { PuestoRepositoryInterface } from "./puesto.repository.interface";
+import { PuestoDtoResponse } from "src/core-services/dtos/response/puestoResponse.dto";
 
 @Injectable()
 export class PuestoRepository implements PuestoRepositoryInterface {
@@ -27,6 +28,27 @@ export class PuestoRepository implements PuestoRepositoryInterface {
         } as Puesto;
 
         return puesto;
+
+    }
+
+    async getPuestos(): Promise<PuestoDtoResponse[]> {
+        const response = await this.puestoRepository
+            .createQueryBuilder()
+            .select()
+            .execute()
+
+        if(!response.length) throw new BadRequestException('No se encontraron puestos de trabajo.')
+        
+        let puestos: PuestoDtoResponse[] = [];
+        for(let puesto of response){
+            let pto = {
+                puesto_id: puesto.Puesto_id,
+                nombre: puesto.Puesto_nombre
+            } as PuestoDtoResponse;
+            puestos.push(pto);
+        }
+
+        return puestos;
 
     }
     

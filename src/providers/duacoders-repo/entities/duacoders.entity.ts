@@ -24,10 +24,6 @@ export class Duacoder extends BaseEntity {
     @Column({ name: 'fecha_nacimiento', type: 'date', nullable: false })
     fechaNacimiento: Date;
 
-    @OneToOne(() => Puesto, puesto => puesto.id)
-    @JoinColumn({ name: 'puesto_id' })
-    puesto: Puesto;
-
     constructor() {
         super();
     }

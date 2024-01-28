@@ -13,23 +13,26 @@ export class DuacoderInfoRepository implements DuacoderRepositoryInterface {
     
     async getBasicInfoDuacoder(nif: string): Promise<Duacoder> {
         const response = await this.duacoderRepository
-            .createQueryBuilder()
-            .select()
+        .createQueryBuilder()
+        .select()
             .where('nif = :nif', { nif })
             .execute();
+            
+            if(!response.length) throw new BadRequestException('El NIF no corresponde con ningun duacoder.')
+            
+            const duacoder = {
+                puestoId: response[0].Duacoder_puesto_id,
+                nombre: response[0].Duacoder_nombre,
+                biografia: response[0].Duacoder_biografia,
+                foto: response[0].Duacoder_foto,
+                tortillaConCebolla: response[0].Duacoder_tortilla_con_cebolla === 1 ? true : false,
+                fechaNacimiento: response[0].Duacoder_fecha_nacimiento
+            } as Duacoder;
+            return duacoder;
+            
+        };
         
-        if(!response.length) throw new BadRequestException('El NIF no corresponde con ningun duacoder.')
-
-        const duacoder = {
-            puestoId: response[0].Duacoder_puesto_id,
-            nombre: response[0].Duacoder_nombre,
-            biografia: response[0].Duacoder_biografia,
-            foto: response[0].Duacoder_foto,
-            tortillaConCebolla: response[0].Duacoder_tortilla_con_cebolla === 1 ? true : false,
-            fechaNacimiento: response[0].Duacoder_fecha_nacimiento
-        } as Duacoder;
-        return duacoder;
-    
+        async createDuacoder(duacoder: Duacoder): Promise<Duacoder> {
+            return await this.duacoderRepository.save(duacoder);
+        }
     }
-;
-}

@@ -27,7 +27,7 @@ export class UsersEndpointsController {
     @Post('createUser')
     @ApiBody({ type: UserRequestDto})
     async createUser(
-        @Body(new ValidationPipe()) user: UserRequestDto
+        @Body() user: UserRequestDto
     ): Promise<Users>{
         try {     
             return  await this.userService.createUser(user);

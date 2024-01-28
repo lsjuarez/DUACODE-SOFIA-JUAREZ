@@ -13,13 +13,13 @@ export class SkillsXDuacoder extends BaseEntity {
     @Column({ name: 'skills_id', type: 'int', nullable: false })
     skillsId: number;
 
-    @ManyToMany(() => Duacoder, duacoder => duacoder.nif)
-    @JoinColumn({ name: 'duacoder_id' })
-    duacoder: Duacoder;
+    // @ManyToMany(() => Duacoder, duacoder => duacoder.nif)
+    // @JoinColumn({ name: 'duacoder_id' })
+    // duacoder: Duacoder;
 
-    @ManyToMany(() => Skill, skill => skill.id)
-    @JoinColumn({ name: 'skills_id' })
-    skill: Skill;
+    // @ManyToMany(() => Skill, skill => skill.id)
+    // @JoinColumn({ name: 'skills_id' })
+    // skill: Skill;
 
     constructor() {
         super();

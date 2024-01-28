@@ -12,9 +12,9 @@ export class Puesto extends BaseEntity {
     @Column({ name: 'departamento_id', type: 'int', nullable: false })
     departamentoId: number;
 
-    @ManyToOne(() => Departamento, departamento => departamento.id)
-    @JoinColumn({ name: 'departamento_id' })
-    departamento: Departamento;
+    // @ManyToOne(() => Departamento, departamento => departamento.id)
+    // @JoinColumn({ name: 'departamento_id' })
+    // departamento: Departamento;
 
     constructor() {
         super();
