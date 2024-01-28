@@ -38,6 +38,27 @@ export class DuacodersController {
 
     @ApiBearerAuth()
     @UseGuards(AuthGuard)
+    @ApiQuery({ name: 'page', required: true, type: Number, example: 1 })
+    @ApiQuery({ name: 'pageSize', required: true, type: Number, example: 2 })
+    @ApiQuery({ name: 'puesto_id', required: false, type: Number, example: 2 })
+    @ApiQuery({ name: 'skill_id', required: false, type: Number, example: 5 })
+    @Get('getDuacoders')
+    async getUsers(
+        @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
+        @Query('pageSize', new DefaultValuePipe(5), ParseIntPipe) pageSize: number,
+        @Query('puesto_id') puesto_id: number,
+        @Query('skill_id') skill_id: number
+    ): Promise<DuacoderInfoDto[]> {
+        try {
+            const filter = { puesto_id, skill_id };
+            return await this.duacoderService.getDuacoders(page, pageSize, filter);
+        } catch (err) {
+            this.log.error(err);
+            throw new BadRequestException(err)
+        }
+    }
+    @ApiBearerAuth()
+    @UseGuards(AuthGuard)
     @Get('getPuestos')
     async getPuestos(): Promise<PuestoDtoResponse[]> {
         try {
@@ -74,52 +95,6 @@ export class DuacodersController {
 
     @ApiBearerAuth()
     @UseGuards(AuthGuard)
-    @Delete('deleteDuacoder')
-    async deleteDuacoder(@Body() duacoder: DeleteDuacoderRequestDto): Promise<Boolean> {
-        try {
-            return await this.duacoderService.deleteDuacoder(duacoder);
-        } catch (err) {
-            this.log.error(err);
-            throw new BadRequestException(err);
-        }
-    }
-
-    @ApiBearerAuth()
-    @UseGuards(AuthGuard)
-    @Put('updateDuacoder')
-    async updateDuacoder(@Body() duacoder: UpdateDuacoderDto): Promise<DuacoderInfoDto> {
-        try {
-            return await this.duacoderService.updateDuacoder(duacoder);
-        } catch (err) {
-            this.log.error(err);
-            throw new BadRequestException(err);
-        }
-    }
-
-    @ApiBearerAuth()
-    @UseGuards(AuthGuard)
-    @ApiQuery({ name: 'page', required: true, type: Number, example: 1 })
-    @ApiQuery({ name: 'pageSize', required: true, type: Number, example: 2 })
-    @ApiQuery({ name: 'puesto_id', required: false, type: Number, example: 2 })
-    @ApiQuery({ name: 'skill_id', required: false, type: Number, example: 5 })
-    @Get('getDuacoders')
-    async getUsers(
-        @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
-        @Query('pageSize', new DefaultValuePipe(5), ParseIntPipe) pageSize: number,
-        @Query('puesto_id') puesto_id: number,
-        @Query('skill_id') skill_id: number
-    ): Promise<DuacoderInfoDto[]> {
-        try {
-            const filter = { puesto_id, skill_id };
-            return await this.duacoderService.getDuacoders(page, pageSize, filter);
-        } catch (err) {
-            this.log.error(err);
-            throw new BadRequestException(err)
-        }
-    }
-
-    @ApiBearerAuth()
-    @UseGuards(AuthGuard)
     @Post('createSkills')
     @ApiBody({ type: SkillRequestDto})
     async createSkills(@Body() body: SkillRequestDto[]) {
@@ -139,6 +114,30 @@ export class DuacodersController {
         try {
             return await this.duacoderService.createDepartamentos(body['departamentos']) ;
         } catch(err){
+            this.log.error(err);
+            throw new BadRequestException(err);
+        }
+    }
+
+    @ApiBearerAuth()
+    @UseGuards(AuthGuard)
+    @Delete('deleteDuacoder')
+    async deleteDuacoder(@Body() duacoder: DeleteDuacoderRequestDto): Promise<Boolean> {
+        try {
+            return await this.duacoderService.deleteDuacoder(duacoder);
+        } catch (err) {
+            this.log.error(err);
+            throw new BadRequestException(err);
+        }
+    }
+
+    @ApiBearerAuth()
+    @UseGuards(AuthGuard)
+    @Put('updateDuacoder')
+    async updateDuacoder(@Body() duacoder: UpdateDuacoderDto): Promise<DuacoderInfoDto> {
+        try {
+            return await this.duacoderService.updateDuacoder(duacoder);
+        } catch (err) {
             this.log.error(err);
             throw new BadRequestException(err);
         }

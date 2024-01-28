@@ -11,7 +11,7 @@ import { DepartamentoRepository } from "./repositories/departamentos/departament
 import { PuestoRepository } from "./repositories/puesto/puesto.repository.impl";
 import { SkillsRepository } from "./repositories/skills/skills.repository.impl";
 import { SkillXduacoderRepository } from "./repositories/skillsXduacoders/skillsXduacoders.repository.impl";
-import { DuacoderInfoRepository } from "./repositories/duadocer/duacoder.repository.impl";
+import { DuacoderInfoRepository } from "./repositories/duacoder/duacoder.repository.impl";
 import { Photo } from "./entities/photos.entity";
 import { PhotoRepository } from "./repositories/photo/photo.repository.impl";
 

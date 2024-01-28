@@ -4,8 +4,7 @@ export class DuacoderInfoDto {
     nombre_puesto!: string;
     nombre_departamento!: string;
     biografia?: string;
-    foto?: string;
-    tortilla_con_cebolla!: boolean;
+    tortilla_con_cebolla!: boolean | string;
     fecha_nacimiento?: string;
     skills?: string[];
 }

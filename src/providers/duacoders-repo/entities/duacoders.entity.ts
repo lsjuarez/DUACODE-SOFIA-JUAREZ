@@ -16,7 +16,7 @@ export class Duacoder extends BaseEntity {
     @Column({ name: 'tortilla_con_cebolla', type: 'boolean', nullable: false })
     tortillaConCebolla: boolean;
 
-    @Column({ name: 'fecha_nacimiento', type: 'date', nullable: false })
+    @Column({ name: 'fecha_nacimiento', type: 'date', nullable: true })
     fechaNacimiento: Date;
 
     constructor() {

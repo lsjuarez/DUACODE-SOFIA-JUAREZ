@@ -3,10 +3,11 @@ import { WINSTON_MODULE_PROVIDER } from "nest-winston";
 import { QueryFailedError } from "typeorm";
 import { Logger } from "winston";
 import * as fs from 'fs';
+import { LOG_FILE_PATH } from "../../../core-services/dtos/constants/logFilePath.dto";
 
 @Catch(QueryFailedError)
 export class SqlErrorFilter implements ExceptionFilter {
-    private logFilePath = 'src\\core-services\\shared\\files\\error.txt';
+    private logFilePath = LOG_FILE_PATH;
     constructor(
         @Inject(WINSTON_MODULE_PROVIDER)
         private readonly logger: Logger

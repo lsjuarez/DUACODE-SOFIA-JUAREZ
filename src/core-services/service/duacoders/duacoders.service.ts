@@ -4,7 +4,7 @@ import { DuacoderInterface } from "./duacoders.interface";
 import { DepartamentoRepositoryInterface } from "../../../providers/duacoders-repo/repositories/departamentos/departamento.repository.interface";
 import { PuestoRepositoryInterface } from "../../../providers/duacoders-repo/repositories/puesto/puesto.repository.interface";
 import { SkillsDuacodersRepositoryInterface } from "../../../providers/duacoders-repo/repositories/skillsXduacoders/skillsXduacoders.interface";
-import { DuacoderRepositoryInterface } from "../../../providers/duacoders-repo/repositories/duadocer/duacoder.interface";
+import { DuacoderRepositoryInterface } from "../../../providers/duacoders-repo/repositories/duacoder/duacoder.interface";
 import { CreateDuacoderDto } from "../../../core-services/dtos/request/createDuacoderRequest.dto";
 import { PuestoDtoResponse } from "../../../core-services/dtos/response/puestoResponse.dto";
 import { SkillResponseDto } from "../../../core-services/dtos/response/skillResponse.dto";
@@ -34,7 +34,6 @@ export class DuacodersServiceImpl implements DuacoderInterface {
         const skills = await this.skillsXduacoderRepository.getSkillsDuacoder(nif);
         const puesto = await this.puestoRepository.getPuesto(duacoder.puestoId);
         const departamento = await this.departamentoRepository.getDepartamentos(puesto.departamentoId);
-        const photo = await this.photoRepository.getDuacoderPhoto(nif);
 
         const duacoderInfo = {
             nif: nif,
@@ -42,7 +41,6 @@ export class DuacodersServiceImpl implements DuacoderInterface {
             nombre_departamento: departamento.nombre,
             nombre_puesto: puesto.nombre,
             biografia: duacoder.biografia,
-            foto: photo,
             tortilla_con_cebolla: duacoder.tortillaConCebolla,
             fecha_nacimiento: duacoder.fechaNacimiento,
             skills: skills
@@ -65,7 +63,6 @@ export class DuacodersServiceImpl implements DuacoderInterface {
             puestoId: duacoder.puesto_id,
             nombre: duacoder.nombre,
             biografia: duacoder.biografia ? duacoder.biografia : null,
-            foto: null,
             tortillaConCebolla: duacoder.tortillaConCebolla,
             fechaNacimiento: duacoder.fechaNacimiento ? duacoder.fechaNacimiento : null,
         } as unknown as Duacoder;
@@ -103,7 +100,6 @@ export class DuacodersServiceImpl implements DuacoderInterface {
             const skills = await this.skillsXduacoderRepository.getSkillsDuacoder(duacoder.nif);
             const puesto = await this.puestoRepository.getPuesto(duacoder.puestoId);
             const departamento = await this.departamentoRepository.getDepartamentos(puesto.departamentoId);
-            const photo = await this.photoRepository.getDuacoderPhoto(duacoder.nif);
 
             const d = {
                 nif: duacoder.nif,
@@ -111,7 +107,6 @@ export class DuacodersServiceImpl implements DuacoderInterface {
                 nombre_departamento: departamento.nombre,
                 nombre_puesto: puesto.nombre,
                 biografia: duacoder.biografia,
-                foto: photo,
                 tortilla_con_cebolla: duacoder.tortillaConCebolla,
                 fecha_nacimiento: duacoder.fechaNacimiento,
                 skills: skills
@@ -155,6 +150,10 @@ export class DuacodersServiceImpl implements DuacoderInterface {
 
     async deleteDuacoderPhoto(nif:string): Promise<boolean> {
         return await this.photoRepository.deleteDuacoderPhoto(nif)
+    }
+
+    async getDuacoderPhoto(nif: string): Promise<string> {
+       return await this.photoRepository.getDuacoderPhoto(nif);
     }
 
     async createSkills(skills: string[]): Promise<void> {

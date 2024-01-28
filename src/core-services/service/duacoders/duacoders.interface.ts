@@ -18,4 +18,5 @@ export interface DuacoderInterface {
     uploadDuacoderPhoto(photo, nif:string): Promise<boolean>;
     deleteDuacoderPhoto(nif:string): Promise<boolean>;
     getDuacodersForExcel(filters): Promise<DuacoderInfoDto[]>;
+    getDuacoderPhoto(nif: string): Promise<string>;
 }

@@ -40,7 +40,11 @@ export class FileServiceImpl implements FileInterface {
         let book = new ExcelJS.Workbook();
         let sheet = book.addWorksheet('Duacoders');
         let rows = [];
+        const mapTortillaConCebolla = (value: boolean | string): string => {
+          return value ? 'Si' : 'No';
+        };
         duacoders.forEach(doc => {
+            doc.tortilla_con_cebolla = mapTortillaConCebolla(doc.tortilla_con_cebolla);
             rows.push(Object.values(doc))
         });
         rows.unshift(Object.keys(duacoders[0]));

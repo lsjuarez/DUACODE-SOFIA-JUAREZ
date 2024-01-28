@@ -6,6 +6,7 @@ import { Duacoder } from "../../entities/duacoders.entity";
 import { UpdateDuacoderDto } from "../../../../core-services/dtos/request/updateDuacoderRequest.dto";
 import { SkillsXDuacoder } from "../../entities/skillsXduacoder.entity";
 import { Skill } from "../../entities/skills.entity";
+import { formatDate } from "../../../../core-services/shared/shared-methods";
 
 @Injectable()
 export class DuacoderInfoRepository implements DuacoderRepositoryInterface {
@@ -28,8 +29,8 @@ export class DuacoderInfoRepository implements DuacoderRepositoryInterface {
             nombre: response[0].Duacoder_nombre,
             biografia: response[0].Duacoder_biografia,
             tortillaConCebolla: response[0].Duacoder_tortilla_con_cebolla === 1 ? true : false,
-            fechaNacimiento: response[0].Duacoder_fecha_nacimiento
-        } as Duacoder;
+            fechaNacimiento: response[0].Duacoder_fecha_nacimiento === null ? null : formatDate(response[0].Duacoder_fecha_nacimiento)
+        } as unknown as Duacoder;
         return duacoder;
 
     };
@@ -61,16 +62,7 @@ export class DuacoderInfoRepository implements DuacoderRepositoryInterface {
 
     async getDuacodersByFilter(page: number, pageSize: number, filter): Promise<Duacoder[]> {
         const queryBuilder = this.duacoderRepository.createQueryBuilder('d')
-            .select([
-                'd.nif AS "nif"',
-                'd.puesto_id AS "puestoId"',
-                'd.nombre AS "nombre"',
-                'd.biografia AS "biografia"',
-                'd.foto AS "foto"',
-                'd.tortilla_con_cebolla AS "tortillaConCebolla"',
-                'd.fecha_nacimiento AS "fechaNacimiento"'
-            ])
-            .distinct(true)
+            .select()
             .innerJoin(SkillsXDuacoder, 'sxd', 'sxd.duacoder_id = d.nif')
             .innerJoin(Skill, 's', 's.id = sxd.skills_id')
 
@@ -87,7 +79,7 @@ export class DuacoderInfoRepository implements DuacoderRepositoryInterface {
         const duacoders = await queryBuilder
             .skip((page - 1) * pageSize)
             .take(pageSize)
-            .execute();
+            .getMany()
 
         return duacoders;
     }
@@ -99,7 +91,6 @@ export class DuacoderInfoRepository implements DuacoderRepositoryInterface {
                 'd.puesto_id AS "puestoId"',
                 'd.nombre AS "nombre"',
                 'd.biografia AS "biografia"',
-                'd.foto AS "foto"',
                 'd.tortilla_con_cebolla AS "tortillaConCebolla"',
                 'd.fecha_nacimiento AS "fechaNacimiento"'
             ])

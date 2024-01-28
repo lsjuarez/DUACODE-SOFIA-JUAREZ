@@ -1,22 +1,2 @@
-2024-01-28T19:12:07.612Z: Cannot read properties of undefined (reading 'buffer')
-2024-01-28T19:12:32.192Z: Cannot read properties of undefined (reading 'buffer')
-2024-01-28T19:12:59.086Z: Cannot read properties of undefined (reading 'buffer')
-2024-01-28T19:13:56.458Z: Data too long for column 'foto' at row 1
-2024-01-28T19:19:38.536Z: Unknown column 'size' in 'field list'
-2024-01-28T19:23:26.357Z: Incorrect string value: '\xFF\xD8\xFF\xDB\x00C...' for column 'foto' at row 1
-2024-01-28T19:53:44.913Z: Unauthorized
-2024-01-28T19:54:14.032Z: The "chunk" argument must be of type string or an instance of Buffer or Uint8Array. Received an instance of Array
-2024-01-28T19:56:10.594Z: The "chunk" argument must be of type string or an instance of Buffer or Uint8Array. Received an instance of Array
-2024-01-28T19:56:19.567Z: The "chunk" argument must be of type string or an instance of Buffer or Uint8Array. Received an instance of Array
-2024-01-28T19:57:35.139Z: The "chunk" argument must be of type string or an instance of Buffer or Uint8Array. Received an instance of Array
-2024-01-28T20:22:49.568Z: Unauthorized
-2024-01-28T21:43:02.120Z: Unauthorized
-2024-01-28T21:43:33.288Z: Property "nif" was not found in "Photo". Make sure your query is correct.
-2024-01-28T21:44:17.027Z: Unknown column 'nif' in 'where clause'
-2024-01-28T21:47:10.970Z: Unknown column 'nif' in 'field list'
-2024-01-28T21:51:43.213Z: Duplicate entry '12345678P' for key 'photos.unique_duacoder_id'
-2024-01-28T22:08:41.910Z: Unauthorized
-2024-01-28T22:09:47.110Z: Expected property name or '}' in JSON at position 1
-2024-01-28T22:26:41.427Z: El NIF no corresponde con ningun duacoder.
-2024-01-28T22:28:07.083Z: Unknown column 'd.foto' in 'field list'
-2024-01-28T22:28:37.379Z: Unknown column 'd.foto' in 'field list'
+2024-01-28T23:49:21.700Z: Unauthorized
+2024-01-28T23:50:18.970Z: Unauthorized

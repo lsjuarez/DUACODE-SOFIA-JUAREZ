@@ -24,7 +24,7 @@ export class PhotoRepository implements PhotoRepositoryInterface {
             .where('duacoder_id = :nif', { nif })
             .execute();
 
-        if (!response.length) return null;
+        if (!response.length) return 'El duacoder no tiene foto registrada.';
         return response[0].photo_string;
     }
 

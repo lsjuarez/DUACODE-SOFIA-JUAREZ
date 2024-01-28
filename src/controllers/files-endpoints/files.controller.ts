@@ -9,6 +9,7 @@ import { DuacoderInterface } from "../../core-services/service/duacoders/duacode
 import { FileInterface } from "../../core-services/service/files/file.interface";
 import { AuthGuard } from "../../core-services/service/auth/jwt-auth.guard";
 import { DeleteDuacoderPhotoReqDto } from "../../core-services/dtos/request/deleteDuacoderPhotoRequest.dto";
+import { LOG_FILE_PATH } from "../../core-services/dtos/constants/logFilePath.dto";
 
 @Controller()
 @ApiTags('Files Endpoints')
@@ -22,12 +23,25 @@ export class FilesController {
         private fileService: FileInterface
     ) { };
 
+    // @ApiBearerAuth()
+    // @UseGuards(AuthGuard)
+    @ApiQuery({ name: 'nif', required: true, type: String, example: '11111111A' })
+    @Get('getDuacoderPhoto')
+    async getDuacoderPhoto(@Query('nif') nif): Promise<string>{
+        try {
+            return await this.duacoderService.getDuacoderPhoto(nif)
+        } catch(err) {
+            this.log.error(err);
+            throw new BadRequestException(err);
+        }
+    }
+
     @ApiBearerAuth()
     @UseGuards(AuthGuard)
     @Get('downloadLogErrorFile')
     downloadLogErrorFile(@Res() res: Response): void {
         try {
-            const filePath = 'src\\core-services\\shared\\files\\error.txt';
+            const filePath = LOG_FILE_PATH;
             res.setHeader('Content-Disposition', `attachment; filename=${path.basename(filePath)}`);
             res.setHeader('Content-Type', 'text/plain');
 
