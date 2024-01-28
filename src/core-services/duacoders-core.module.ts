@@ -1,7 +1,7 @@
 import { Module } from "@nestjs/common";
+import { JwtModule } from "@nestjs/jwt";
 import { DuacodersRepoModule } from "../providers/duacoders-repo/duacoder-provider.module";
 import { DuacodersServiceImpl, JwtAuthServiceImpl, UsersServiceImpl } from "./service/index";
-import { JwtModule } from "@nestjs/jwt";
 import { FileServiceImpl } from "./service/files/file.service";
 
 @Module({

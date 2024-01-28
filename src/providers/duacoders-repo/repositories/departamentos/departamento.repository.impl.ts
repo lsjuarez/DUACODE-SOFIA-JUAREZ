@@ -1,8 +1,8 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
-import { DepartamentoRepositoryInterface } from "./departamento.repository.interface";
-import { Departamento } from "../../entities/departamentos.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
+import { DepartamentoRepositoryInterface } from "./departamento.repository.interface";
+import { Departamento } from "../../entities/departamentos.entity";
 
 @Injectable()
 export class DepartamentoRepository implements DepartamentoRepositoryInterface {
@@ -26,6 +26,15 @@ export class DepartamentoRepository implements DepartamentoRepositoryInterface {
         } as Departamento;
 
         return departamento;
+    }
+
+    async createDepartamentos(departamentos: string[]): Promise<void> {
+        const deparamentosObject = departamentos.map(departamentoName => ({ nombre: departamentoName }));
+        await this.departamentoRepository
+            .createQueryBuilder()
+            .insert()
+            .values(deparamentosObject)
+            .execute()
     }
     
 }

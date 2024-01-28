@@ -1,6 +1,4 @@
-import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { Departamento } from "./departamentos.entity";
-
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 @Entity({ name: 'puesto' })
 export class Puesto extends BaseEntity {
     @PrimaryGeneratedColumn()
@@ -11,10 +9,6 @@ export class Puesto extends BaseEntity {
 
     @Column({ name: 'departamento_id', type: 'int', nullable: false })
     departamentoId: number;
-
-    // @ManyToOne(() => Departamento, departamento => departamento.id)
-    // @JoinColumn({ name: 'departamento_id' })
-    // departamento: Departamento;
 
     constructor() {
         super();

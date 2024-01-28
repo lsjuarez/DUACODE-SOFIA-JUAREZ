@@ -1,24 +1,17 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { Type } from "class-transformer";
-import { IsArray, IsNotEmpty, IsString, ValidateNested } from "class-validator";
-
-export class Skills {
+import { ArrayNotEmpty, ArrayUnique, IsArray, IsString } from "class-validator";
+export class SkillRequestDto {
     @ApiProperty({
         example: ['React', 'Angular'],
         required: true,
         type: [String]
     })
-    @IsNotEmpty({message: 'El nombre del skill no puede estar vacío.'})
     @IsString({
         message: 'Los elementos skills deben ser string',
         each: true,
-    })    
+    })   
+    @ArrayNotEmpty({ message: 'Skills array cannot be empty' })
+    @ArrayUnique({ message: 'Skills array must not contain duplicate values' }) 
     @IsArray()
     skills: string[];
-}
-export class SkillRequestDto {
-    @ApiProperty({ type: Skills})
-    @ValidateNested()
-    @Type(() => Skills)
-    skills: Skills;
 }

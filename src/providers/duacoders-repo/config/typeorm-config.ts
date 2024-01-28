@@ -5,6 +5,7 @@ import { Skill } from "../entities/skills.entity";
 import { Duacoder } from "../entities/duacoders.entity";
 import { Puesto } from "../entities/puesto.entity";
 import { SkillsXDuacoder } from "../entities/skillsXduacoder.entity";
+import { Photo } from "../entities/photos.entity";
 
 require('dotenv').config();
 
@@ -21,7 +22,8 @@ export const typeOrmDuacoderConfig: TypeOrmModuleOptions = {
         Departamento,
         Puesto,
         Duacoder,
-        SkillsXDuacoder
+        SkillsXDuacoder,
+        Photo
     ],
     synchronize: true
 }

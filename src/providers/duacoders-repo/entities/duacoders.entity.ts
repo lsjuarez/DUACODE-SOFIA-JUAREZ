@@ -1,6 +1,4 @@
-import { BaseEntity, Column, Entity, JoinColumn, OneToOne, PrimaryColumn } from "typeorm";
-import { Puesto } from "./puesto.entity";
-
+import { BaseEntity, Column, Entity, PrimaryColumn } from "typeorm";
 @Entity({ name: 'duacoders' })
 export class Duacoder extends BaseEntity {
     @PrimaryColumn({ type: 'varchar', length: 255, nullable: false })
@@ -14,9 +12,6 @@ export class Duacoder extends BaseEntity {
 
     @Column({ type: 'varchar', length: 300, nullable: true })
     biografia: string;
-
-    @Column({ type: 'varchar', length: 255, nullable: true })
-    foto: string;
 
     @Column({ name: 'tortilla_con_cebolla', type: 'boolean', nullable: false })
     tortillaConCebolla: boolean;

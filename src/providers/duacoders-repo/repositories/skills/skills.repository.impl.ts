@@ -1,9 +1,9 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
+import { Repository } from "typeorm";
+import { InjectRepository } from "@nestjs/typeorm";
 import { SkillsRepositoryInterface } from "./skills.interface";
 import { Skill } from "../../entities/skills.entity";
-import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
-import { SkillResponseDto } from "src/core-services/dtos/response/skillResponse.dto";
+import { SkillResponseDto } from "../../../../core-services/dtos/response/skillResponse.dto";
 
 @Injectable()
 export class SkillsRepository implements SkillsRepositoryInterface {
@@ -46,6 +46,15 @@ export class SkillsRepository implements SkillsRepositoryInterface {
             skills.push(sk);
         }
         return skills;
+    }
+
+    async createSkills(skills: string[]): Promise<void> {
+        const skillObjects = skills.map(skillName => ({ nombre: skillName }));
+        await this.skillRepository
+            .createQueryBuilder()
+            .insert()
+            .values(skillObjects)
+            .execute()
     }
     
 }

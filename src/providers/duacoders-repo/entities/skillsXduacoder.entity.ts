@@ -1,6 +1,4 @@
-import { BaseEntity, Column, Entity, JoinColumn, ManyToMany, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
-import { Duacoder } from "./duacoders.entity";
-import { Skill } from "./skills.entity";
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({ name: 'skillsxduacoder' })
 export class SkillsXDuacoder extends BaseEntity {

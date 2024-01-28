@@ -1,19 +1,17 @@
-import { Controller, Post, UseGuards, Req, Get, Query, BadRequestException, Inject, Body, Delete, Put, DefaultValuePipe, ParseIntPipe, UseInterceptors, UploadedFile, Param, Res, Logger } from "@nestjs/common";
-import { FileFieldsInterceptor, FileInterceptor } from "@nestjs/platform-express";
-import { Response } from 'express';
+import { Controller, Post, UseGuards, Get, Query, BadRequestException, Inject, Body, Delete, Put, DefaultValuePipe, ParseIntPipe } from "@nestjs/common";
 import { ApiBearerAuth, ApiBody, ApiQuery, ApiTags } from "@nestjs/swagger";
-import { CreateDuacoderDto } from "src/core-services/dtos/request/createDuacoderRequest.dto";
-import { DeleteDuacoderRequestDto } from "src/core-services/dtos/request/deleteDuacoderRequest.dto";
-import { UpdateDuacoderDto } from "src/core-services/dtos/request/updateDuacoderRequest.dto";
-import { DuacoderInfoDto } from "src/core-services/dtos/response/duacoderInfoResponse.dto";
-import { PuestoDtoResponse } from "src/core-services/dtos/response/puestoResponse.dto";
-import { SkillResponseDto } from "src/core-services/dtos/response/skillResponse.dto";
-import { DuacoderInterface } from "src/core-services/service/duacoders/duacoders.interface";
-import { FileInterface } from "src/core-services/service/files/file.interface";
-import { AuthGuard } from "src/core-services/service/auth/jwt-auth.guard";
-import { SkillRequestDto } from "src/core-services/dtos/request/skillsRequest.dto";
 import { WINSTON_MODULE_PROVIDER } from "nest-winston";
-import * as path from 'path';
+import { Logger } from "winston";
+import { CreateDuacoderDto } from "../../core-services/dtos/request/createDuacoderRequest.dto";
+import { DeleteDuacoderRequestDto } from "../../core-services/dtos/request/deleteDuacoderRequest.dto";
+import { UpdateDuacoderDto } from "../../core-services/dtos/request/updateDuacoderRequest.dto";
+import { DuacoderInfoDto } from "../../core-services/dtos/response/duacoderInfoResponse.dto";
+import { PuestoDtoResponse } from "../../core-services/dtos/response/puestoResponse.dto";
+import { SkillResponseDto } from "../../core-services/dtos/response/skillResponse.dto";
+import { DuacoderInterface } from "../../core-services/service/duacoders/duacoders.interface";
+import { AuthGuard } from "../../core-services/service/auth/jwt-auth.guard";
+import { SkillRequestDto } from "../../core-services/dtos/request/skillsRequest.dto";
+import { DepartamentoRequestDto } from "../../core-services/dtos/request/puestoRequest.dto";
 
 @Controller()
 @ApiTags('Duacoders Endpoints')
@@ -23,8 +21,6 @@ export class DuacodersController {
         private readonly log: Logger,
         @Inject('DuacoderInterface')
         private duacoderService: DuacoderInterface,
-        @Inject('FileInterface')
-        private fileService: FileInterface
     ) { };
 
     @ApiBearerAuth()
@@ -122,44 +118,14 @@ export class DuacodersController {
         }
     }
 
-    // @ApiBearerAuth()
-    // @UseGuards(AuthGuard)
-    // @Post('createSkills')
-    // @ApiBody({ type: SkillRequestDto})
-    // async createSkills(@Body() skills: SkillRequestDto) {
-    //     try {
-    //         console.log(skills);
-    //     } catch(err){
-    //         throw new BadRequestException(err);
-    //     }
-    // }
-
-    // @Post('createPuesto')
-    // async createPuesto() {
-
-    // }
-
-    // @Put('updateSkillsxDuacoder')
-    // async updateSkillsxDuacoder() {
-
-    // }
-
-    // @Post('createExcel')
-    // async createExcel() {
-
-    // }
-
     @ApiBearerAuth()
     @UseGuards(AuthGuard)
-    @Get('downloadLogErrorFile')
-    downloadLogErrorFile(@Res() res: Response): void {
+    @Post('createSkills')
+    @ApiBody({ type: SkillRequestDto})
+    async createSkills(@Body() body: SkillRequestDto[]) {
         try {
-            const filePath = 'src\\core-services\\shared\\files\\error.txt';
-            res.setHeader('Content-Disposition', `attachment; filename=${path.basename(filePath)}`);
-            res.setHeader('Content-Type', 'text/plain');
-    
-            res.download(filePath, path.basename(filePath));
-        } catch (err) { 
+            return await this.duacoderService.createSkills(body['skills']) ;
+        } catch(err){
             this.log.error(err);
             throw new BadRequestException(err);
         }
@@ -167,35 +133,14 @@ export class DuacodersController {
 
     @ApiBearerAuth()
     @UseGuards(AuthGuard)
-    @ApiQuery({ name: 'nif', required: true, type: String, example: '11111111A' })
-    @Get('createPDF')
-    async createPDF(@Query('nif') nif, @Res() res: Response) {
+    @Post('createDepartamento')
+    @ApiBody({ type: DepartamentoRequestDto})
+    async createDeparatamento(@Body() body: DepartamentoRequestDto[]) {
         try {
-            const duacoderInfo = await this.duacoderService.getDuacoderInfo(nif);
-            const buffer = await this.fileService.generatePdf(duacoderInfo);
-            
-            res.set({
-                'Content-Type': 'application/pdf',
-                'Content-Disposition': `attachment; filename=duacoder_${nif}.pdf`,
-                'Content-Length': buffer.length,
-            })
-
-            res.end(buffer)
-        } catch (err) {
+            return await this.duacoderService.createDepartamentos(body['departamentos']) ;
+        } catch(err){
             this.log.error(err);
             throw new BadRequestException(err);
         }
     }
-
-    // @Post('uploadDuacoderPhoto')
-    // @UseInterceptors(FileInterceptor('file'))
-    // async uploadDuacoderPhoto(@UploadedFile() file, @Body() nif: string): Promise<string> {
-    //     try {
-    //         const uploadedPhoto = await this.duacoderService.uploadDuacoderPhoto(file, nif);
-    //         if(uploadedPhoto) return 'La foto fue subida con éxito.'
-    //         return 'No se pudo subir la foto, no existe duacoder registrado con ese NIF';
-    //     } catch (err) {
-    //         throw new BadRequestException(err);
-    //     }
-    // } 
 }

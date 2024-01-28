@@ -1,8 +1,8 @@
 import { BadRequestException, Inject, Injectable } from "@nestjs/common";
-import { SkillsDuacodersRepositoryInterface } from "./skillsXduacoders.interface";
 import { InjectRepository } from "@nestjs/typeorm";
-import { SkillsXDuacoder } from "../../entities/skillsXduacoder.entity";
 import { Repository } from "typeorm";
+import { SkillsDuacodersRepositoryInterface } from "./skillsXduacoders.interface";
+import { SkillsXDuacoder } from "../../entities/skillsXduacoder.entity";
 import { SkillsRepositoryInterface } from "../skills/skills.interface";
 
 @Injectable()

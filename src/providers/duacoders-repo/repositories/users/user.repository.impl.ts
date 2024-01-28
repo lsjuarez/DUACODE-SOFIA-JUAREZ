@@ -1,8 +1,8 @@
-import { BadRequestException, Injectable, UnauthorizedException } from "@nestjs/common";
-import { UserRepositoryInterface } from "./user.repository.interface";
+import { Injectable, UnauthorizedException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { UserRequestDto } from "src/core-services/dtos/request/createUserRequest.dto";
 import { Repository } from "typeorm";
+import { UserRepositoryInterface } from "./user.repository.interface";
+import { UserRequestDto } from "../../../../core-services/dtos/request/createUserRequest.dto";
 import { Users } from "../../entities/users.entity";
 import { comparePassword, hashPassword } from "../../../../core-services/shared/shared-methods";
 

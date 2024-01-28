@@ -1,4 +1,4 @@
-import { Users } from "src/providers/duacoders-repo/entities/users.entity";
+import { Users } from "../../../providers/duacoders-repo/entities/users.entity";
 import { UserRequestDto } from "../../dtos/request/createUserRequest.dto";
 
 export interface UsersInterface {

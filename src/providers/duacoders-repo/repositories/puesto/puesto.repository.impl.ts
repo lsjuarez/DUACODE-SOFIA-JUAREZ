@@ -1,9 +1,9 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Puesto } from "../../entities/puesto.entity";
 import { Repository } from "typeorm";
+import { Puesto } from "../../entities/puesto.entity";
 import { PuestoRepositoryInterface } from "./puesto.repository.interface";
-import { PuestoDtoResponse } from "src/core-services/dtos/response/puestoResponse.dto";
+import { PuestoDtoResponse } from "../../../../core-services/dtos/response/puestoResponse.dto";
 
 @Injectable()
 export class PuestoRepository implements PuestoRepositoryInterface {

@@ -1,10 +1,10 @@
-import { DuacoderInfoDto } from "src/core-services/dtos/response/duacoderInfoResponse.dto";
 import * as PDFDocument from 'pdfkit';
+import * as ExcelJS from 'exceljs';
+import { DuacoderInfoDto } from "../../../core-services/dtos/response/duacoderInfoResponse.dto";
 import { FileInterface } from "./file.interface";
-
 export class FileServiceImpl implements FileInterface {
     constructor() { }
-
+    
     async generatePdf(duacoder: DuacoderInfoDto): Promise<Buffer> {
         const conCebolla = duacoder.tortilla_con_cebolla ? 'Si' : 'No';
         const pdfBuffer: Buffer = await new Promise(resolve => {
@@ -23,11 +23,11 @@ export class FileServiceImpl implements FileInterface {
                 .text(`Departamento: ${duacoder.nombre_departamento}`)
                 .text(`Puesto: ${duacoder.nombre_puesto}`)
                 .text(`Skills: ${duacoder.skills}`)
-            doc.end();
-
-            const buffer = [];
-            doc.on('data', buffer.push.bind(buffer));
-            doc.on('end', () => {
+                doc.end();
+                
+                const buffer = [];
+                doc.on('data', buffer.push.bind(buffer));
+                doc.on('end', () => {
                 const data = Buffer.concat(buffer);
                 resolve(data);
             })
@@ -35,5 +35,21 @@ export class FileServiceImpl implements FileInterface {
 
         return pdfBuffer;
     }
+    
+    async generateExcel(duacoders: DuacoderInfoDto[]): Promise<any>{
+        let book = new ExcelJS.Workbook();
+        let sheet = book.addWorksheet('Duacoders');
+        let rows = [];
+        duacoders.forEach(doc => {
+            rows.push(Object.values(doc))
+        });
+        rows.unshift(Object.keys(duacoders[0]));
 
+        sheet.addRows(rows);
+
+        const excel = await book.xlsx.writeBuffer();
+
+        return excel;
+      
+    }
 }

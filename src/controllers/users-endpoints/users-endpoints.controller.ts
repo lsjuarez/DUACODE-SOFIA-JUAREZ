@@ -1,10 +1,10 @@
-import { BadRequestException, Body, Controller, Inject, Post, ValidationPipe } from "@nestjs/common";
-import { UserRequestDto } from "../../core-services/dtos/request/createUserRequest.dto";
-import { UsersInterface } from "../../core-services/service/users/users.interface";
-import { Users } from "../../providers/duacoders-repo/entities/users.entity";
+import { BadRequestException, Body, Controller, Inject, Post } from "@nestjs/common";
 import { ApiBody, ApiTags } from "@nestjs/swagger";
 import { WINSTON_MODULE_PROVIDER } from "nest-winston";
 import { Logger } from "winston";
+import { UserRequestDto } from "../../core-services/dtos/request/createUserRequest.dto";
+import { UsersInterface } from "../../core-services/service/users/users.interface";
+import { Users } from "../../providers/duacoders-repo/entities/users.entity";
 
 @Controller()
 @ApiTags('Users Endpoints')

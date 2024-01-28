@@ -58,16 +58,6 @@ export class UpdateDuacoderDto {
     @IsNumber({}, {message: 'El puesto no posee el formato correcto.'})
     puesto_id?: number;
 
-    // @ApiProperty({
-    //     name: 'skills_id',
-    //     example: [1,2],
-    //     required: false,
-    //     description: 'Skills que posee el duacoder',
-    //     type: [Number]
-    // })
-    // @IsOptional()
-    // skills_id?: number[];
-
     @ApiProperty({
         name: 'fechaNacimiento',
         example: '1999-09-23',
