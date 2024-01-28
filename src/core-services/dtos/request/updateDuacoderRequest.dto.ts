@@ -1,8 +1,8 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsArray, IsBoolean, IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString, Matches, ValidateNested } from "class-validator";
+import { IsBoolean, IsNotEmpty, IsNumber, IsOptional, IsString, Matches } from "class-validator";
 
 const regex = /^[0-9]{8}[A-Za-z]$/
-export class CreateDuacoderDto {
+export class UpdateDuacoderDto {
     @ApiProperty({
         name: 'nif',
         example: '12345678P',
@@ -17,13 +17,13 @@ export class CreateDuacoderDto {
     @ApiProperty({
         name: 'nombre',
         example: 'Sofia',
-        required: true,
+        required: false,
         description: 'Nombre del duacoder',
         type: String
     })
-    @IsNotEmpty({ message: 'El nombre no puede estar vacío.'})
+    @IsOptional()
     @IsString({ message: 'El nombre no posee el formato correcto.'})
-    nombre!: string;
+    nombre?: string;
 
     @ApiProperty({
         name: 'biografia',
@@ -39,34 +39,34 @@ export class CreateDuacoderDto {
     @ApiProperty({
         name: 'tortillaConCebolla',
         example: 'true',
-        required: true,
+        required: false,
         description: 'Campo que indica si le gusta la tortilla con o sin cebolla.',
         type: Boolean
     })
-    @IsNotEmpty({message: 'El campo no puede estar vacío.'})
+    @IsOptional()
     @IsBoolean({message: 'El campo no posee el formato correcto.'})
-    tortillaConCebolla!: boolean;
+    tortillaConCebolla?: boolean;
 
     @ApiProperty({
         name: 'puesto_id',
         example: 1,
-        required: true,
+        required: false,
         description: 'Puesto del duacoder dentro de la empresa.',
         type: Number
     })
-    @IsNotEmpty({ message: 'El puesto no puede estar vacío.'})
+    @IsOptional()
     @IsNumber({}, {message: 'El puesto no posee el formato correcto.'})
-    puesto_id!: number;
+    puesto_id?: number;
 
-    @ApiProperty({
-        name: 'skills_id',
-        example: [1,2],
-        required: true,
-        description: 'Skills que posee el duacoder',
-        type: [Number]
-    })
-    @IsNotEmpty({ message: 'El puesto no puede estar vacío.'})
-    skills_id!: number[];
+    // @ApiProperty({
+    //     name: 'skills_id',
+    //     example: [1,2],
+    //     required: false,
+    //     description: 'Skills que posee el duacoder',
+    //     type: [Number]
+    // })
+    // @IsOptional()
+    // skills_id?: number[];
 
     @ApiProperty({
         name: 'fechaNacimiento',

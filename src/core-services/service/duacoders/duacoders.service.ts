@@ -11,6 +11,7 @@ import { SkillResponseDto } from "src/core-services/dtos/response/skillResponse.
 import { SkillsRepositoryInterface } from "src/providers/duacoders-repo/repositories/skills/skills.interface";
 import { Duacoder } from "src/providers/duacoders-repo/entities/duacoders.entity";
 import { DeleteDuacoderRequestDto } from "src/core-services/dtos/request/deleteDuacoderRequest.dto";
+import { UpdateDuacoderDto } from "src/core-services/dtos/request/updateDuacoderRequest.dto";
 
 export class DuacodersServiceImpl implements DuacoderInterface {
     constructor(
@@ -82,5 +83,12 @@ export class DuacodersServiceImpl implements DuacoderInterface {
             throw new BadRequestException('No se encontró duacoder para borrar.')
         }
         throw new BadRequestException('No se encontró duacoder para borrar.')
+    }
+
+    async updateDuacoder(duacoder: UpdateDuacoderDto): Promise<DuacoderInfoDto> {
+    
+        await this.duacoderRepository.updateDuacoder(duacoder);
+        
+        return this.getDuacoderInfo(duacoder.nif);
     }
 }

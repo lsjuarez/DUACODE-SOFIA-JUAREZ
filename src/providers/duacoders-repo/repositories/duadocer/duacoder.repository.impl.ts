@@ -3,6 +3,7 @@ import { DuacoderRepositoryInterface } from "./duacoder.interface";
 import { Duacoder } from "../../entities/duacoders.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
+import { UpdateDuacoderDto } from "src/core-services/dtos/request/updateDuacoderRequest.dto";
 
 @Injectable()
 export class DuacoderInfoRepository implements DuacoderRepositoryInterface {
@@ -45,5 +46,15 @@ export class DuacoderInfoRepository implements DuacoderRepositoryInterface {
 
             if(response.affected === 0) return false;
             return true;
+        }
+
+        async updateDuacoder(duacoder: UpdateDuacoderDto): Promise<void>{
+            const { nif } = duacoder;
+            await this.duacoderRepository
+                .createQueryBuilder()
+                .update()
+                .set(duacoder)
+                .where('nif = :nif', { nif })
+                .execute()
         }
     }
