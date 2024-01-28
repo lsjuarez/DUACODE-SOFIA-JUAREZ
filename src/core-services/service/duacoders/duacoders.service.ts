@@ -91,4 +91,31 @@ export class DuacodersServiceImpl implements DuacoderInterface {
         
         return this.getDuacoderInfo(duacoder.nif);
     }
+
+    async getDuacoders(page: number, pageSize: number, filters): Promise<DuacoderInfoDto[]> {
+        const duacoders = await this.duacoderRepository.getDuacodersByFilter(page, pageSize, filters);
+        
+        let duacodersInfo:DuacoderInfoDto[] = [];
+        for( let duacoder of duacoders) {
+            const skills = await this.skillsXduacoderRepository.getSkillsDuacoder(duacoder.nif);
+            const puesto = await this.puestoRepository.getPuesto(duacoder.puestoId);
+            const departamento = await this.departamentoRepository.getDepartamentos(puesto.departamentoId);
+            
+            
+            const d = {
+                nif: duacoder.nif,
+                nombre: duacoder.nombre,
+                nombre_departamento: departamento.nombre,
+                nombre_puesto: puesto.nombre,
+                biografia: duacoder.biografia,
+                foto: duacoder.foto,
+                tortilla_con_cebolla: duacoder.tortillaConCebolla,
+                fecha_nacimiento: duacoder.fechaNacimiento,
+                skills: skills
+            } as unknown as DuacoderInfoDto;
+            duacodersInfo.push(d);
+        }
+
+        return duacodersInfo;
+    }
 }

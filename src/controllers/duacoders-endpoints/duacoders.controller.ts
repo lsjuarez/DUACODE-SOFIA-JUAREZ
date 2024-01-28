@@ -1,4 +1,4 @@
-import { Controller, Post, UseGuards, Req, Get, Query, BadRequestException, Inject, Body, Delete, Put } from "@nestjs/common";
+import { Controller, Post, UseGuards, Req, Get, Query, BadRequestException, Inject, Body, Delete, Put, DefaultValuePipe, ParseIntPipe } from "@nestjs/common";
 import { ApiQuery, ApiTags } from "@nestjs/swagger";
 import { CreateDuacoderDto } from "src/core-services/dtos/request/createDuacoderRequest.dto";
 import { DeleteDuacoderRequestDto } from "src/core-services/dtos/request/deleteDuacoderRequest.dto";
@@ -77,6 +77,25 @@ export class DuacodersEndpointsController {
             return await this.duacoderService.updateDuacoder(duacoder);
         } catch(err){
             throw new BadRequestException(err);
+        }
+    }
+
+    @ApiQuery({ name: 'page', required: true, type: Number, example: 1})
+    @ApiQuery({ name: 'pageSize', required: true, type: Number, example: 2})
+    @ApiQuery({ name: 'puesto_id', required: false, type: Number, example: 2})
+    @ApiQuery({ name: 'skill_id', required: false, type: Number, example: 5})
+    @Get('getDuacoders')
+    async getUsers(
+        @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
+        @Query('pageSize', new DefaultValuePipe(5), ParseIntPipe) pageSize: number,
+        @Query('puesto_id') puesto_id: number,
+        @Query('skill_id') skill_id: number
+    ): Promise<DuacoderInfoDto[]> {
+        try {
+            const filter = { puesto_id, skill_id};
+            return await this.duacoderService.getDuacoders(page, pageSize, filter);
+        } catch (err){
+            throw new BadRequestException(err)
         }
     }
 }
