@@ -2,8 +2,10 @@ import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { clearFileContent } from './core-services/shared/shared-methods';
 
 async function bootstrap() {
+  clearFileContent();
   const app = await NestFactory.create(AppModule);
 
   app.setGlobalPrefix('duacoder-handler/api/v1');
