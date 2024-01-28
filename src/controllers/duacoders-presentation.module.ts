@@ -1,7 +1,7 @@
 import { Module } from "@nestjs/common";
 import { DuacoderCoreModule } from "src/core-services/duacoders-core.module";
-import { DuacodersEndpointsController } from "./duacoders-endpoints/duacoders.controller";
-import { UsersEndpointsController } from "./users-endpoints/users-endpoints.controller";
+import { UsersController } from "./users-endpoints/users-endpoints.controller";
+import { DuacodersController } from "./duacoders-endpoints/duacoders.controller";
 
 
 @Module({
@@ -9,8 +9,8 @@ import { UsersEndpointsController } from "./users-endpoints/users-endpoints.cont
         DuacoderCoreModule
     ],
     controllers: [
-        UsersEndpointsController,
-        DuacodersEndpointsController
+        UsersController,
+        DuacodersController,
     ],
 })
 export class DuacoderPresentationModule {};

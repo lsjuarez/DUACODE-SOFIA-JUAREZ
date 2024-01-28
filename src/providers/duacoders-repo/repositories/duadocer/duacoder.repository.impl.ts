@@ -96,4 +96,10 @@ export class DuacoderInfoRepository implements DuacoderRepositoryInterface {
             throw new BadRequestException(err)
         }
     }
+
+    async uploadDuacoderPhoto(photo:string, nif:string): Promise<boolean> {
+        const photoDB = await this.duacoderRepository.update(nif, { foto: photo });
+        if(photoDB.affected === 0) return false;
+        return true;
+    }
 }

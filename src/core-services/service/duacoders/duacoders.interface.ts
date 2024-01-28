@@ -13,4 +13,5 @@ export interface DuacoderInterface {
     deleteDuacoder(duacoder: DeleteDuacoderRequestDto): Promise<boolean>
     updateDuacoder(duacoder: UpdateDuacoderDto): Promise<DuacoderInfoDto>;
     getDuacoders(page: number, pageSize: number, filters): Promise<DuacoderInfoDto[]>;
+    uploadDuacoderPhoto(photo, nif:string): Promise<boolean>;
 }

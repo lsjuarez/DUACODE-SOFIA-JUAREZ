@@ -24,7 +24,7 @@ export class DuacodersServiceImpl implements DuacoderInterface {
         @Inject('SkillsDuacodersRepositoryInterface')
         private skillsXduacoderRepository: SkillsDuacodersRepositoryInterface,
         @Inject('DuacoderRepositoryInterface')
-        private duacoderRepository: DuacoderRepositoryInterface
+        private duacoderRepository: DuacoderRepositoryInterface,
     ){}
     
     async getDuacoderInfo(nif: string): Promise<DuacoderInfoDto> {
@@ -117,5 +117,10 @@ export class DuacodersServiceImpl implements DuacoderInterface {
         }
 
         return duacodersInfo;
+    }
+
+    async uploadDuacoderPhoto(photo, nif:string): Promise<boolean> {
+        const photoBase64 = photo.buffer.toString('base64');
+        return await this.duacoderRepository.uploadDuacoderPhoto(photoBase64, nif);
     }
 }

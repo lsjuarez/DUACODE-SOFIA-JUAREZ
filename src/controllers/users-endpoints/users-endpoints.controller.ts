@@ -6,7 +6,7 @@ import { ApiBody, ApiTags } from "@nestjs/swagger";
 
 @Controller()
 @ApiTags('Users Endpoints')
-export class UsersEndpointsController {
+export class UsersController {
     constructor(
         @Inject('UsersInterface')
         private userService: UsersInterface

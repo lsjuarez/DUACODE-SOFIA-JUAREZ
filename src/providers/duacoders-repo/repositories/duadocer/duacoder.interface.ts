@@ -7,4 +7,5 @@ export interface DuacoderRepositoryInterface {
     deleteDuacoder(nif: string): Promise<boolean>;
     updateDuacoder(duacoder: UpdateDuacoderDto): Promise<void>;
     getDuacodersByFilter(page: number, pageSize: number, filter): Promise<Duacoder[]>;
+    uploadDuacoderPhoto(photo, nif:string): Promise<boolean>;
 }
