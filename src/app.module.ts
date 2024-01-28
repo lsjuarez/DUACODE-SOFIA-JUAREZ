@@ -16,6 +16,7 @@ import { PassportModule } from '@nestjs/passport';
     DuacoderPresentationModule,
     PassportModule,
     JwtModule.register({
+      global: true,
       secret: 'super-secret-user',
       signOptions: { expiresIn: '1h'}
     })

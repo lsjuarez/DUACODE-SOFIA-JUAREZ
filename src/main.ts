@@ -19,6 +19,7 @@ async function bootstrap() {
     .setTitle('Duacoder Handler')
     .setDescription('Servicios de APIS que permitan consultas de los duacoders existentes')
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
     const document = SwaggerModule.createDocument(app,config);
     SwaggerModule.setup('docs', app, document);

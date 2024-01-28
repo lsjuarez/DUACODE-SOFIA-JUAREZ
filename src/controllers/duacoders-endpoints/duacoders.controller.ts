@@ -1,16 +1,16 @@
 import { Controller, Post, UseGuards, Req, Get, Query, BadRequestException, Inject, Body, Delete, Put, DefaultValuePipe, ParseIntPipe, UseInterceptors, UploadedFile, Param, Res } from "@nestjs/common";
 import { FileFieldsInterceptor, FileInterceptor } from "@nestjs/platform-express";
 import { Response } from 'express';
-import { ApiQuery, ApiTags } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiQuery, ApiTags } from "@nestjs/swagger";
 import { CreateDuacoderDto } from "src/core-services/dtos/request/createDuacoderRequest.dto";
 import { DeleteDuacoderRequestDto } from "src/core-services/dtos/request/deleteDuacoderRequest.dto";
 import { UpdateDuacoderDto } from "src/core-services/dtos/request/updateDuacoderRequest.dto";
 import { DuacoderInfoDto } from "src/core-services/dtos/response/duacoderInfoResponse.dto";
 import { PuestoDtoResponse } from "src/core-services/dtos/response/puestoResponse.dto";
 import { SkillResponseDto } from "src/core-services/dtos/response/skillResponse.dto";
-import { JwtAuthGuard } from "src/core-services/service/auth/jwt-auth.guard";
 import { DuacoderInterface } from "src/core-services/service/duacoders/duacoders.interface";
 import { FileInterface } from "src/core-services/service/files/file.interface";
+import { AuthGuard } from "src/core-services/service/auth/jwt-auth.guard";
 
 
 @Controller()
@@ -23,13 +23,8 @@ export class DuacodersController {
         private fileService: FileInterface
     ) { };
 
-    // @Post('probando')
-    // //@UseGuards(JwtAuthGuard)
-    // probando(@Req() request: Request){
-    //     const jwt = request.headers['authorization'].split(' ')[1];
-    //     console.log(jwt);
-    // }
-
+    @ApiBearerAuth()
+    @UseGuards(AuthGuard)
     @ApiQuery({ name: 'nif', required: true, type: String, example: '11111111A' })
     @Get('getDuacoderInfo')
     async getDuacoderInfo(@Query('nif') nif): Promise<DuacoderInfoDto> {
@@ -40,6 +35,8 @@ export class DuacodersController {
         }
     }
 
+    @ApiBearerAuth()
+    @UseGuards(AuthGuard)
     @Get('getPuestos')
     async getPuestos(): Promise<PuestoDtoResponse[]> {
         try {
@@ -49,6 +46,8 @@ export class DuacodersController {
         }
     }
 
+    @ApiBearerAuth()
+    @UseGuards(AuthGuard)
     @Get('getSkills')
     async getSkills(): Promise<SkillResponseDto[]> {
         try {
@@ -58,6 +57,8 @@ export class DuacodersController {
         }
     }
 
+    @ApiBearerAuth()
+    @UseGuards(AuthGuard)
     @Post('createDuacoder')
     async createDuacoder(@Body() duacoder: CreateDuacoderDto): Promise<DuacoderInfoDto> {
         try {
@@ -67,6 +68,8 @@ export class DuacodersController {
         }
     }
 
+    @ApiBearerAuth()
+    @UseGuards(AuthGuard)
     @Delete('deleteDuacoder')
     async deleteDuacoder(@Body() duacoder: DeleteDuacoderRequestDto): Promise<Boolean> {
         try {
@@ -76,6 +79,8 @@ export class DuacodersController {
         }
     }
 
+    @ApiBearerAuth()
+    @UseGuards(AuthGuard)
     @Put('updateDuacoder')
     async updateDuacoder(@Body() duacoder: UpdateDuacoderDto): Promise<DuacoderInfoDto> {
         try {
@@ -85,6 +90,8 @@ export class DuacodersController {
         }
     }
 
+    @ApiBearerAuth()
+    @UseGuards(AuthGuard)
     @ApiQuery({ name: 'page', required: true, type: Number, example: 1 })
     @ApiQuery({ name: 'pageSize', required: true, type: Number, example: 2 })
     @ApiQuery({ name: 'puesto_id', required: false, type: Number, example: 2 })
@@ -134,6 +141,8 @@ export class DuacodersController {
 
     // }
 
+    @ApiBearerAuth()
+    @UseGuards(AuthGuard)
     @ApiQuery({ name: 'nif', required: true, type: String, example: '11111111A' })
     @Get('createPDF')
     async createPDF(@Query('nif') nif, @Res() res: Response) {

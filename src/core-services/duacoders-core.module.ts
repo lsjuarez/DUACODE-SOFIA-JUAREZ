@@ -28,7 +28,7 @@ import { FileServiceImpl } from "./service/files/file.service";
         {
             provide: 'FileInterface',
             useClass: FileServiceImpl
-        }
+        },
     ],
     exports: [
         {
