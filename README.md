@@ -27,13 +27,19 @@
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
 ## Installation
-
+Import first the tables from the database. You can find them under DB/
+Before installing the dependencies, make sure you are using Node v20.11.0
 ```bash
 $ npm install
 ```
 
 ## Running the app
-
+Before running the app, you need to create a .env file with the structure of .env.example.
+To try the 'uploadDuacoderPhoto' API go to Postman and import the next curl:
+curl --location 'localhost:APP_PORT/duacoder-handler/api/v1/uploadDuacoderPhoto' \
+--header 'Authorization: Bearer yourToken' \
+--form 'nif="12345678P"' \
+--form 'file=@"pathOfTheImage"'
 ```bash
 # development
 $ npm run start
